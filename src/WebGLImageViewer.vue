@@ -17,6 +17,7 @@
       // 对于像素艺术和小图片保持锐利，使用最新的标准属性
       imageRendering: 'pixelated',
     }" />
+    <DebugInfo v-if="debug" />
   </div>
 </template>
 
@@ -39,6 +40,7 @@ import {
 } from './constants'
 import type { WebGLImageViewerProps, WebGLImageViewerRef } from './interface'
 import { WebGLImageViewerEngine } from './WebGLImageViewerEngine'
+import DebugInfo from './DebugInfo.vue'
 
 // 定义组件属性
 interface Props extends WebGLImageViewerProps {

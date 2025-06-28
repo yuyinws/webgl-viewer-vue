@@ -271,7 +271,3 @@ const getMemoryPressureColor = (pressure: number) => {
   return '#f87171'
 }
 </script>
-
-<style scoped>
-/* 如果需要额外的样式可以在这里添加 */
-</style>

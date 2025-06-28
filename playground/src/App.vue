@@ -10,8 +10,8 @@
     </div>
 
     <div class="viewer-container">
-      <WebGLImageViewer ref="viewerRef" :src="imageSrc" :width="800" :height="600" :initial-scale="1" :min-scale="0.1"
-        :max-scale="10" :debug="true" @zoom-change="handleZoomChange" @image-copied="handleImageCopied"
+      <WebGLImageViewer ref="viewerRef" :src="imageSrc" :width="1920" :height="1080" :initial-scale="1" :min-scale="0.1"
+        :max-scale="10" debug @zoom-change="handleZoomChange" @image-copied="handleImageCopied"
         @loading-state-change="handleLoadingStateChange" />
     </div>
   </div>
