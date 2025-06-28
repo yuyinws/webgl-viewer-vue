@@ -1,7 +1,7 @@
 {
   "name": "webgl-viewer-vue",
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "packageManager": "pnpm@10.12.3",
   "description": "",
   "author": "Innei",
