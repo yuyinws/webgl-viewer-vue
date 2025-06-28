@@ -94,7 +94,7 @@ export class WebGLImageViewerEngine extends ImageViewerEngineBase {
     state?: LoadingState,
     quality?: 'high' | 'medium' | 'low' | 'unknown',
   ) => void
-  private onDebugUpdate?: React.RefObject<(debugInfo: any) => void>
+  private onDebugUpdate?: (debugInfo: DebugInfo) => void
 
   // 当前质量状态
   private currentQuality: 'high' | 'medium' | 'low' | 'unknown' = 'unknown'
@@ -125,7 +125,7 @@ export class WebGLImageViewerEngine extends ImageViewerEngineBase {
   constructor(
     canvas: HTMLCanvasElement,
     config: Required<WebGLImageViewerProps>,
-    onDebugUpdate?: React.RefObject<(debugInfo: DebugInfo) => void>,
+    onDebugUpdate?: (debugInfo: DebugInfo) => void,
   ) {
     super()
     this.canvas = canvas
@@ -754,7 +754,7 @@ export class WebGLImageViewerEngine extends ImageViewerEngineBase {
         const tileCenterY = (y + 0.5) * tileHeightInImage
         const distance = Math.sqrt(
           Math.pow(tileCenterX - viewCenterX, 2) +
-            Math.pow(tileCenterY - viewCenterY, 2),
+          Math.pow(tileCenterY - viewCenterY, 2),
         )
 
         visibleTiles.push({
@@ -1061,7 +1061,7 @@ export class WebGLImageViewerEngine extends ImageViewerEngineBase {
   }
 
   private updateDebugInfo() {
-    if (!this.onDebugUpdate?.current) return
+    if (!this.onDebugUpdate) return
 
     const fitToScreenScale = this.getFitToScreenScale()
     const relativeScale = this.scale / fitToScreenScale
@@ -1089,7 +1089,7 @@ export class WebGLImageViewerEngine extends ImageViewerEngineBase {
       pendingKeys: this.pendingTileRequests.map((req) => req.key),
     }
 
-    this.onDebugUpdate.current({
+    this.onDebugUpdate({
       scale: this.scale,
       relativeScale,
       translateX: this.translateX,
@@ -1130,7 +1130,6 @@ export class WebGLImageViewerEngine extends ImageViewerEngineBase {
 
   private notifyLoadingStateChange(
     isLoading: boolean,
-
     state?: LoadingState,
     quality?: 'high' | 'medium' | 'low' | 'unknown',
   ) {
@@ -1258,7 +1257,7 @@ export class WebGLImageViewerEngine extends ImageViewerEngineBase {
       const touch2 = e.touches[1]
       this.lastTouchDistance = Math.sqrt(
         Math.pow(touch2.clientX - touch1.clientX, 2) +
-          Math.pow(touch2.clientY - touch1.clientY, 2),
+        Math.pow(touch2.clientY - touch1.clientY, 2),
       )
     }
   }
@@ -1287,7 +1286,7 @@ export class WebGLImageViewerEngine extends ImageViewerEngineBase {
       const touch2 = e.touches[1]
       const distance = Math.sqrt(
         Math.pow(touch2.clientX - touch1.clientX, 2) +
-          Math.pow(touch2.clientY - touch1.clientY, 2),
+        Math.pow(touch2.clientY - touch1.clientY, 2),
       )
 
       if (this.lastTouchDistance > 0) {
