@@ -12,6 +12,7 @@
   "main": "./src/index.ts",
   "scripts": {
     "build": "vite build",
+    "playground": "pnpm --filter playground dev",
     "type-check": "tsc --noEmit",
     "release": "pnpm build && vv"
   },
