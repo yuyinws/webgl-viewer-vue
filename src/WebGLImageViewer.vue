@@ -213,7 +213,3 @@ onUnmounted(() => {
   cleanup()
 })
 </script>
-
-<style scoped>
-/* 如果需要额外的样式可以在这里添加 */
-</style>
