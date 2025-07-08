@@ -40,9 +40,9 @@ const resetView = () => {
   viewerRef.value?.resetView()
 }
 
-const handleZoomChange = (scale: number) => {
-  currentScale.value = scale
-  console.log('缩放变化:', scale)
+const handleZoomChange = (originalScale: number, relativeScale: number) => {
+  currentScale.value = relativeScale
+  console.log('缩放变化:', originalScale, relativeScale)
 }
 
 const handleImageCopied = () => {
