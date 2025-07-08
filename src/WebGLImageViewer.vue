@@ -60,7 +60,7 @@ interface Props extends WebGLImageViewerProps {
   smooth?: boolean
   alignmentAnimation?: typeof defaultAlignmentAnimation
   velocityAnimation?: typeof defaultVelocityAnimation
-  onZoomChange?: (scale: number) => void
+  onZoomChange?: (originalScale: number, relativeScale: number) => void
   onImageCopied?: () => void
   onLoadingStateChange?: (loading: boolean) => void
   debug?: boolean
@@ -84,14 +84,11 @@ const props = withDefaults(defineProps<Props>(), {
   centerOnInit: true,
   smooth: true,
   debug: false,
-  onZoomChange: () => { },
-  onImageCopied: () => { },
-  onLoadingStateChange: () => { },
 })
 
 // 定义暴露的方法
 const emit = defineEmits<{
-  zoomChange: [scale: number]
+  zoomChange: [originalScale: number, relativeScale: number]
   imageCopied: []
   loadingStateChange: [loading: boolean]
 }>()
@@ -99,6 +96,19 @@ const emit = defineEmits<{
 // 模板引用
 const canvasRef = ref<HTMLCanvasElement>()
 const viewerRef = ref<WebGLImageViewerEngine | null>(null)
+
+// 回调函数
+const callbacks = {
+  onZoomChange: (originalScale: number, relativeScale: number) => {
+    emit('zoomChange', originalScale, relativeScale)
+  },
+  onImageCopied: () => {
+    emit('imageCopied')
+  },
+  onLoadingStateChange: (loading: boolean) => {
+    emit('loadingStateChange', loading)
+  },
+}
 
 // 计算配置对象
 const config = computed<Required<WebGLImageViewerProps>>(() => ({
@@ -124,18 +134,9 @@ const config = computed<Required<WebGLImageViewerProps>>(() => ({
     ...props.alignmentAnimation,
   },
   velocityAnimation: { ...defaultVelocityAnimation, ...props.velocityAnimation },
-  onZoomChange: (scale: number) => {
-    props.onZoomChange(scale)
-    emit('zoomChange', scale)
-  },
-  onImageCopied: () => {
-    props.onImageCopied()
-    emit('imageCopied')
-  },
-  onLoadingStateChange: (loading: boolean) => {
-    props.onLoadingStateChange(loading)
-    emit('loadingStateChange', loading)
-  },
+  onZoomChange: callbacks.onZoomChange,
+  onImageCopied: callbacks.onImageCopied,
+  onLoadingStateChange: callbacks.onLoadingStateChange,
   debug: props.debug,
 }))
 

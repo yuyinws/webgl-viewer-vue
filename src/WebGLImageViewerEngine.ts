@@ -199,7 +199,7 @@ export class WebGLImageViewerEngine extends ImageViewerEngineBase {
     if (this.imageLoaded) {
       this.constrainScaleAndPosition()
       this.render()
-      this.notifyZoomChange()
+      // 调整大小时不触发 zoomChange 回调，避免重复触发
     }
   }
 
@@ -379,7 +379,7 @@ export class WebGLImageViewerEngine extends ImageViewerEngineBase {
           this.isLoadingTexture = false
           this.notifyLoadingStateChange(false)
           this.render()
-          this.notifyZoomChange()
+          // 初始化时不触发 zoomChange 回调，避免重复触发
           resolve()
         } catch (error) {
           this.isLoadingTexture = false
@@ -566,7 +566,7 @@ export class WebGLImageViewerEngine extends ImageViewerEngineBase {
       (this.targetTranslateY - this.startTranslateY) * easedProgress
 
     this.render()
-    this.notifyZoomChange()
+    // 动画过程中不触发 zoomChange 回调，避免重复触发
 
     if (progress < 1) {
       requestAnimationFrame(() => this.animate())
